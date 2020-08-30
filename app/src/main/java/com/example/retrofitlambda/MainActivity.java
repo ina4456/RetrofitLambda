@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnCancel:
                 try {
-                    cancelBoardingMethod(callID, callDT);
+                    cancelBoardingMethod();
                     tv.setText("배차취소 완료");
                 } catch (NoSuchPaddingException | InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
                     Log.d("button2ERROR", e.getMessage());
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnCarInfo:
                 try {
-                    carInfoMethod(callID, callDT);
+                    carInfoMethod();
                     tv.setText("현재 차의 위치는 위도:"+carLon+", 경도:"+carLat+" 입니다.");
                 } catch (NoSuchPaddingException | InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
                     Log.d("button2ERROR", e.getMessage());
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnDriverInfo:
                 try {
-                    driverInfoMethod(callID, callDT);
+                    driverInfoMethod();
                 } catch (NoSuchPaddingException | InvalidKeyException | NoSuchAlgorithmException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
                     Log.d("button2ERROR", e.getMessage());
                 }
@@ -148,15 +148,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void cancelBoardingMethod(String ID, String DT) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    private void cancelBoardingMethod() throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         code = AES256Util.encode(currentDate);
 
         input = new HashMap<>();
         input.put("currentDT", currentDate);
         input.put("authCode", code);
         input.put("mobile", AES256Util.encode("01044561472"));
-        input.put("posName", callID);
-        input.put("posName", callDT);
+        input.put("callID", callID);
+        input.put("callDT", callDT);
 
         Call<ResponseResult> api = ConnectRetrofit.getInstance().mRetrofitAPI.requestBoarding(input);
         ConnectRetrofit.getInstance().call(api, ((call, response) -> {
@@ -171,15 +171,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }));
     }
 
-    private void carInfoMethod(String ID, String DT) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    private void carInfoMethod() throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         code = AES256Util.encode(currentDate);
 
         input = new HashMap<>();
         input.put("currentDT", currentDate);
         input.put("authCode", code);
         input.put("mobile", AES256Util.encode("01044561472"));
-        input.put("posName", callID);
-        input.put("posName", callDT);
+        input.put("callID", callID);
+        input.put("callDT", callDT);
 
         Call<ResponseResult> api = ConnectRetrofit.getInstance().mRetrofitAPI.requestBoarding(input);
         ConnectRetrofit.getInstance().call(api, ((call, response) -> {
@@ -197,15 +197,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void driverInfoMethod(String ID, String DT) throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    private void driverInfoMethod() throws NoSuchPaddingException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         code = AES256Util.encode(currentDate);
 
         input = new HashMap<>();
         input.put("currentDT", currentDate);
         input.put("authCode", code);
         input.put("mobile", AES256Util.encode("01044561472"));
-        input.put("posName", callID);
-        input.put("posName", callDT);
+        input.put("callID", callID);
+        input.put("callDT", callDT);
 
         Call<ResponseResult> api = ConnectRetrofit.getInstance().mRetrofitAPI.requestBoarding(input);
         ConnectRetrofit.getInstance().call(api, ((call, response) -> {
